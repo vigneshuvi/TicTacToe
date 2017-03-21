@@ -1,7 +1,7 @@
 [![Language Swift 3](https://img.shields.io/badge/Language-Swift%203-orange.svg)](https://developer.apple.com/swift)
 
 # TicTacToe
-Sample Game App to connect iWatch and iPhone using Swift 3. 
+A Simple Tic Tac Toe Game App to connect iWatch and iPhone using Swift 3. 
 
 ## Features
 
@@ -12,12 +12,22 @@ Sample Game App to connect iWatch and iPhone using Swift 3.
 
 ## Screenshots
 
-iPhone App
+### iPhone App
 ![alt text][iPhone]
 
 [iPhone]: https://github.com/vigneshuvi/TicTacToe/blob/master/Images/iPhone.gif
 
-iWatch App
+### iWatch App
 ![alt text][iWatch]
 
 [iWatch]: https://github.com/vigneshuvi/TicTacToe/blob/master/Images/iWatch.gif
+
+
+## License
+
+TicTacToe is licensed under the MIT License.
+
+## Contact
+
+### Vignesh Kumar
+* http://vigneshuvi.github.io
