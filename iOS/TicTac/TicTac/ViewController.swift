@@ -11,7 +11,7 @@ import UIKit
 import WatchConnectivity
 
 class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegate,UICollectionViewDataSource {
-
+    
     @IBOutlet var collectionView: UICollectionView!
     var dataSource = [TicTacToeModel]()
     var session: WCSession!
@@ -23,7 +23,7 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
         self.collectionView.register(TicTacToeCCell.self, forCellWithReuseIdentifier: "TicTacToeCell");
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-
+        
         self.reloadDataSource();
         if (WCSession.isSupported()) {
             let session = WCSession.default();
@@ -33,7 +33,7 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
         }
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -165,7 +165,7 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
             }
         }
     }
-
+    
     
     // Sort based on user type
     func detectBasedonRowType(userArray: [TicTacToeModel], with type:Int) {
@@ -192,13 +192,13 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
                     bottomRighttoTop = bottomRighttoTop+1;
                 }
             }
-            if(leftToptoBottom == 2 || bottomRighttoTop  == 2) {
-               
+            if(leftToptoBottom > 2 || bottomRighttoTop  > 2) {
+                
                 self.sentWinningMessage(type: type)
             } else {
                 self.detectBasedonColumnType(userArray: userArray, with:type)
             }
-
+            
         }
     }
     
@@ -227,11 +227,11 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
                     bottomRighttoTop = bottomRighttoTop+1;
                 }
             }
-            if(leftToptoBottom == 2 || bottomRighttoTop  == 2) {
+            if(leftToptoBottom > 2 || bottomRighttoTop  > 2) {
                 
                 self.sentWinningMessage(type: type)
             }
-
+            
         }
     }
     
@@ -241,7 +241,7 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
             let c2Array = userArray.filter { $0.column == 1 }
             let c3Array = userArray.filter { $0.column == 2 }
             if c1Array.count == 1 && c2Array.count == 1 && c3Array.count == 1 {
-                 self.sentWinningMessage(type: type)
+                self.sentWinningMessage(type: type)
             } else {
                 var foundWinner : Int = 0;
                 for i in 0 ..< userArray.count-1 {
@@ -252,7 +252,7 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
                     }
                 }
                 if(foundWinner == 2) {
-                     self.sentWinningMessage(type: type)
+                    self.sentWinningMessage(type: type)
                 }
                 
             }
@@ -261,7 +261,7 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
             let r2Array = userArray.filter { $0.row == 1 }
             let r3Array = userArray.filter { $0.row == 2 }
             if r1Array.count == 1 && r2Array.count == 1 && r3Array.count == 1 {
-                 self.sentWinningMessage(type: type)
+                self.sentWinningMessage(type: type)
             } else {
                 var foundWinner : Int = 0;
                 for i in 0 ..< userArray.count-1 {
@@ -272,7 +272,7 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
                     }
                 }
                 if(foundWinner == 2) {
-                     self.sentWinningMessage(type: type)
+                    self.sentWinningMessage(type: type)
                 }
                 
             }
@@ -295,21 +295,21 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
         let obj: TicTacToeModel = self.dataSource[indexPath.row]
         if(obj.isSelected) {
             if  obj.userType == 1 {
-                 cell.backgroundColor = UIColor.green
+                cell.backgroundColor = UIColor.green
             } else {
                 cell.backgroundColor = UIColor.blue
             }
-                // make cell more visible in our example project
+            // make cell more visible in our example project
         } else {
-             cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
+            cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
         }
-       
+        
         
         return cell
     }
-
     
-
+    
+    
     
     // MARK: - UICollectionViewDelegate protocol
     
@@ -322,7 +322,7 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
             //  set delegate
             self.session!.delegate = self
             if !self.session.isReachable {
-               
+                
                 //  activate session
                 self.session!.activate()
             }
@@ -337,7 +337,7 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
                         obj.userType = 1;
                     }
                     self.dataSource[indexPath.row] = obj
-
+                    
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
                         let requestValues = ["PlayerMessage" :  obj.position, "row" : obj.row, "column": obj.column] as [String : Any]
@@ -440,29 +440,29 @@ class ViewController: UIViewController,WCSessionDelegate,UICollectionViewDelegat
                         self.findWhoisWinner()
                     }
                 }
-
+                
             }
         }
     }
-
-
+    
+    
 }
 
 extension ViewController : UICollectionViewDelegateFlowLayout {
-
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width:CGFloat = (collectionView.frame.size.width-20)/3;
         return CGSize(width: width, height: width);
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 0,  0, 0)
     }
     
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
